@@ -1,13 +1,19 @@
 import React from "react";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import {
-	sidebarItemsData,
-	sidebarBottomChannelsData,
-} from "../../data/sidebarData";
+import { sidebarItemsData } from "../../data/sidebarData";
 import AddIcon from "@material-ui/icons/Add";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import "./Sidebar.css";
+import db from "../../firebase";
 
-const Sidebar = ({ isDark }) => {
+const Sidebar = ({ isDark, rooms }) => {
+	const addChannel = () => {
+		const channelName = prompt("Enter the channel name:");
+		console.log(channelName);
+
+		channelName && db.collection("rooms").add({ name: channelName });
+	};
+
 	return (
 		<div className={isDark ? "sidebar sidebarDark" : "sidebar"}>
 			<div
@@ -46,23 +52,28 @@ const Sidebar = ({ isDark }) => {
 
 			<div className="sidebar__bottomChannels">
 				<div className="sidebar__newBottomChannel">
-					<div>Channels</div>
-					<AddIcon />
+					<ArrowDropDownIcon />
+					<div> Channels</div>
+					<AddIcon
+						className="sidebar__addChannelBtn"
+						onClick={addChannel}
+					/>
 				</div>
 
-				<div className="sidebar__bottomChannels">
-					{sidebarBottomChannelsData.map((item, i) => (
-						<div
-							className={
-								isDark
-									? "sidebarDark__bottomChannel sidebar__bottomChannel"
-									: "sidebar__bottomChannel"
-							}
-							key={i}
-						>
-							# {item.channelName}
-						</div>
-					))}
+				<div className="sidebar__bottomChannelsList">
+					{rooms?.length > 0 &&
+						rooms.map(item => (
+							<div
+								className={
+									isDark
+										? "sidebarDark__bottomChannel sidebar__bottomChannel"
+										: "sidebar__bottomChannel"
+								}
+								key={item.id}
+							>
+								# {item.name}
+							</div>
+						))}
 				</div>
 			</div>
 		</div>

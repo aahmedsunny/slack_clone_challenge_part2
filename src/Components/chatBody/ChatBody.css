@@ -1,0 +1,6 @@
+.chatBody {
+	padding: 8px 20px;
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+}

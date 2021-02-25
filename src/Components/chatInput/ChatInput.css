@@ -1,0 +1,64 @@
+.chatInput {
+	margin: 20px;
+	border: 1px solid #8d8d8e;
+	border-radius: 5px;
+}
+.chatInput > form {
+	display: flex;
+	height: 52px;
+	align-items: center;
+	transition: 0.5s;
+}
+.chatInput input {
+	flex: 1;
+	border: none;
+	font-size: 15px;
+	font-family: inherit;
+	background: transparent;
+	padding-left: 13px;
+}
+.chatInput input:focus {
+	outline: none;
+}
+.chatInput__btnContainer {
+	background-color: #611f69 !important;
+	transform: scale(0.75);
+	border-radius: 4px !important;
+	transition: 0.5s !important;
+}
+.chatInput__btnContainer:hover {
+	background-color: #4a154b !important;
+}
+.chatInput__btnContainer .MuiSvgIcon-root {
+	color: #e5e5e5;
+}
+.chatInput__icons {
+	background-color: #efefef;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px 6px;
+	color: gray;
+}
+.chatInput__icon {
+	margin: 0 !important;
+	padding: 7px !important;
+}
+
+/* ! DARK mode styles */
+.chatInputDark > form {
+	background-color: #3a3b3c;
+}
+.chatInputDark > form > input {
+	color: #fff;
+}
+.chatInputDark > form > input::-webkit-input-placeholder {
+	color: rgb(202, 202, 202);
+}
+.chatInputDark__btnContainer {
+	background-color: #242526 !important;
+	/* transition: 0.5s; */
+}
+.chatInputDark__btnContainer:hover {
+	background-color: #1c1c1c !important;
+}

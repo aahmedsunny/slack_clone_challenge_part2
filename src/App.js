@@ -2,46 +2,58 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Chat from "./Components/chat/Chat";
 import Login from "./Components/login/Login";
-import styled from "styled-components";
 import Header from "./Components/header/Header";
 import Sidebar from "./Components/sidebar/Sidebar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import db from "./firebase";
+import { motion } from "framer-motion";
 
 function App() {
 	const [isDark, setIsDark] = useState(false);
 	const toggleMode = () => setIsDark(!isDark);
+	const [rooms, setRooms] = useState([]);
+
+	const getChannels = () => {
+		db.collection("rooms")
+			.orderBy("name", "asc")
+			.onSnapshot(snapshot =>
+				setRooms(
+					snapshot.docs.map(doc => {
+						return { id: doc.id, name: doc.data().name };
+					})
+				)
+			);
+	};
+
+	useEffect(() => {
+		getChannels();
+	}, []);
+
+	console.log(rooms);
 
 	return (
-		<div className="app">
-			<Router>
-				<Container>
-					<Header isDark={isDark} toggleMode={toggleMode} />
-					<Main>
-						<Sidebar isDark={isDark} />
-						<Switch>
-							<Route path="/room">
-								<Chat isDark={isDark} />
-							</Route>
-							<Route path="/">
-								<Login isDark={isDark} />
-							</Route>
-						</Switch>
-					</Main>
-				</Container>
-			</Router>
-		</div>
+		<Router>
+			<motion.div
+				className="app"
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ type: "tween", duration: 0.3 }}
+			>
+				<Header isDark={isDark} toggleMode={toggleMode} />
+				<div className="main">
+					<Sidebar isDark={isDark} rooms={rooms} />
+					<Switch>
+						<Route path="/room">
+							<Chat isDark={isDark} />
+						</Route>
+						<Route path="/">
+							<Login isDark={isDark} />
+						</Route>
+					</Switch>
+				</div>
+			</motion.div>
+		</Router>
 	);
 }
 
 export default App;
-
-const Container = styled.div`
-	width: 100%;
-	height: 100vh;
-	display: grid;
-	grid-template-rows: 50px auto;
-`;
-const Main = styled.div`
-	display: grid;
-	grid-template-columns: 260px auto;
-`;

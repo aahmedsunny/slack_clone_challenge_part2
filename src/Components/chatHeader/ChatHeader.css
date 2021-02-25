@@ -1,0 +1,38 @@
+.chatHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid lightgray;
+}
+.chatHeader__infoContainer {
+	padding-left: 20px;
+}
+.chatHeader__title {
+	font-weight: bold;
+	margin-bottom: 5px;
+	display: flex;
+	align-content: center;
+}
+.chatHeader__desc {
+	color: #606060;
+}
+.chatHeader__details {
+	display: flex;
+	padding-right: 25px;
+	color: #606060;
+}
+
+.chatHeader__details > span {
+	margin-right: 10px;
+}
+
+/* ! DARK mode */
+.chatHeaderDark {
+	border-bottom: 1px solid #454545 !important;
+}
+.chatHeaderDark__desc {
+	color: #8d8d8d !important;
+}
+.chatHeaderDark__details {
+	color: #8d8d8d !important;
+}
